@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# uploads folder
+/uploads
+
+# data folder for development
+/.data
+/.claude
