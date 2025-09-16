@@ -56,7 +56,7 @@ Happy learning!`,
     authorId: 1,
     authorName: 'Admin User',
     createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z'
+    updatedAt: '2024-01-01T00:00:00Z',
   },
   {
     id: 2,
@@ -115,7 +115,7 @@ console.log(greet('Frontend Masters'));
     authorId: 2,
     authorName: 'Editor User',
     createdAt: '2024-01-02T00:00:00Z',
-    updatedAt: '2024-01-02T00:00:00Z'
+    updatedAt: '2024-01-02T00:00:00Z',
   },
   {
     id: 3,
@@ -167,8 +167,8 @@ export default async function Page() {
     authorId: 1,
     authorName: 'Admin User',
     createdAt: '2024-01-03T00:00:00Z',
-    updatedAt: '2024-01-03T00:00:00Z'
-  }
+    updatedAt: '2024-01-03T00:00:00Z',
+  },
 ];
 
 // Load or initialize data
@@ -211,7 +211,7 @@ export async function getAllPages(): Promise<Page[]> {
 
 export async function getPageById(id: number): Promise<Page | null> {
   const pages = loadPages();
-  const page = pages.find(p => p.id === id);
+  const page = pages.find((p) => p.id === id);
   return Promise.resolve(page || null);
 }
 
@@ -229,7 +229,7 @@ export async function createPage(pageData: {
     authorId: pageData.authorId,
     authorName: pageData.authorName,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 
   pages.push(newPage);
@@ -240,10 +240,10 @@ export async function createPage(pageData: {
 
 export async function updatePage(
   id: number,
-  updates: Partial<Omit<Page, 'id' | 'createdAt'>>
+  updates: Partial<Omit<Page, 'id' | 'createdAt'>>,
 ): Promise<Page | null> {
   const pages = loadPages();
-  const index = pages.findIndex(p => p.id === id);
+  const index = pages.findIndex((p) => p.id === id);
 
   if (index === -1) {
     return Promise.resolve(null);
@@ -252,7 +252,7 @@ export async function updatePage(
   pages[index] = {
     ...pages[index],
     ...updates,
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 
   savePages(pages);
@@ -262,7 +262,7 @@ export async function updatePage(
 
 export async function deletePage(id: number): Promise<boolean> {
   const pages = loadPages();
-  const index = pages.findIndex(p => p.id === id);
+  const index = pages.findIndex((p) => p.id === id);
 
   if (index === -1) {
     return Promise.resolve(false);
@@ -277,9 +277,10 @@ export async function deletePage(id: number): Promise<boolean> {
 export async function searchPages(query: string): Promise<Page[]> {
   const pages = loadPages();
   const lowercaseQuery = query.toLowerCase();
-  const results = pages.filter(page =>
-    page.title.toLowerCase().includes(lowercaseQuery) ||
-    page.content.toLowerCase().includes(lowercaseQuery)
+  const results = pages.filter(
+    (page) =>
+      page.title.toLowerCase().includes(lowercaseQuery) ||
+      page.content.toLowerCase().includes(lowercaseQuery),
   );
   return Promise.resolve(results);
 }

@@ -18,7 +18,8 @@ export default function Error({
       <div className="text-center max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Something went wrong!</h2>
         <p className="text-gray-600 mb-6">
-          An unexpected error occurred. Please try again or contact support if the problem persists.
+          An unexpected error occurred. Please try again or contact support if
+          the problem persists.
         </p>
         <button
           onClick={reset}

@@ -34,7 +34,7 @@ export async function login(email: string): Promise<User | null> {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 1 week
-      path: '/'
+      path: '/',
     });
     console.log(`Logged in as: ${user.name} (${user.role})`);
   }
@@ -53,16 +53,19 @@ export async function logout(): Promise<void> {
   return Promise.resolve();
 }
 
-export function hasRole(user: User | null, requiredRole: 'admin' | 'editor' | 'viewer'): boolean {
+export function hasRole(
+  user: User | null,
+  requiredRole: 'admin' | 'editor' | 'viewer',
+): boolean {
   if (!user) return false;
-  
+
   // Role hierarchy: admin > editor > viewer
   const roleHierarchy = {
     admin: 3,
     editor: 2,
-    viewer: 1
+    viewer: 1,
   };
-  
+
   return roleHierarchy[user.role] >= roleHierarchy[requiredRole];
 }
 

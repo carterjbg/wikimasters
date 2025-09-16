@@ -41,13 +41,19 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   const { title, content } = body;
 
   if (!title || !content) {
-    return NextResponse.json({ error: 'Title and content are required' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Title and content are required' },
+      { status: 400 },
+    );
   }
 
   const updatedPage = await updatePage(pageId, { title, content });
 
   if (!updatedPage) {
-    return NextResponse.json({ error: 'Failed to update page' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to update page' },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json(updatedPage);
@@ -70,7 +76,10 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const success = await deletePage(pageId);
 
   if (!success) {
-    return NextResponse.json({ error: 'Failed to delete page' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to delete page' },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ success: true });

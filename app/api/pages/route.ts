@@ -10,7 +10,7 @@ export async function GET() {
     console.error('Error fetching pages:', error);
     return NextResponse.json(
       { error: 'Failed to fetch pages' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -18,12 +18,9 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const currentUser = await getCurrentUser();
-    
+
     if (!canEditPages(currentUser)) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -32,7 +29,7 @@ export async function POST(request: NextRequest) {
     if (!title || !content) {
       return NextResponse.json(
         { error: 'Title and content are required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +45,7 @@ export async function POST(request: NextRequest) {
     console.error('Error creating page:', error);
     return NextResponse.json(
       { error: 'Failed to create page' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

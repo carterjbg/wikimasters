@@ -11,11 +11,11 @@ interface PageFormProps {
   isEdit?: boolean;
 }
 
-export default function PageForm({ 
-  initialTitle = '', 
-  initialContent = '', 
+export default function PageForm({
+  initialTitle = '',
+  initialContent = '',
   pageId,
-  isEdit = false 
+  isEdit = false,
 }: PageFormProps) {
   const router = useRouter();
   const [title, setTitle] = useState(initialTitle);
@@ -29,12 +29,10 @@ export default function PageForm({
     setError('');
 
     try {
-      const url = isEdit
-        ? `/api/wiki/${pageId}`
-        : '/api/wiki';
-      
+      const url = isEdit ? `/api/wiki/${pageId}` : '/api/wiki';
+
       const method = isEdit ? 'PUT' : 'POST';
-      
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -102,7 +100,8 @@ export default function PageForm({
           placeholder="Enter page content in Markdown format..."
         />
         <p className="mt-2 text-sm text-gray-600">
-          You can use Markdown formatting: **bold**, *italic*, # Headers, [links](url), etc.
+          You can use Markdown formatting: **bold**, *italic*, # Headers,
+          [links](url), etc.
         </p>
       </div>
 
@@ -113,7 +112,7 @@ export default function PageForm({
           className="bg-black text-white rounded-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
           style={{ padding: '10px 24px' }}
         >
-          {isSubmitting ? 'Saving...' : (isEdit ? 'Update Page' : 'Create Page')}
+          {isSubmitting ? 'Saving...' : isEdit ? 'Update Page' : 'Create Page'}
         </button>
         <Link
           href={isEdit ? `/wiki/${pageId}` : '/'}

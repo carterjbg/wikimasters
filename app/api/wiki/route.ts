@@ -7,10 +7,7 @@ export async function POST(request: NextRequest) {
     const currentUser = await getCurrentUser();
 
     if (!canEditPages(currentUser)) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -19,7 +16,7 @@ export async function POST(request: NextRequest) {
     if (!title || !content) {
       return NextResponse.json(
         { error: 'Title and content are required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -27,18 +24,18 @@ export async function POST(request: NextRequest) {
       title,
       content,
       authorId: currentUser!.id,
-      authorName: currentUser!.name
+      authorName: currentUser!.name,
     });
 
     return NextResponse.json({
       success: true,
-      page
+      page,
     });
   } catch (error) {
     console.error('Create page error:', error);
     return NextResponse.json(
       { error: 'Failed to create page' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

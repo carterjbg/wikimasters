@@ -16,16 +16,19 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
   if (options.text) {
     console.log('  Body:', options.text.substring(0, 100) + '...');
   }
-  
+
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 100));
-  
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
   return Promise.resolve(true);
 }
 
-export async function sendWelcomeEmail(user: { name: string; email: string }): Promise<boolean> {
+export async function sendWelcomeEmail(user: {
+  name: string;
+  email: string;
+}): Promise<boolean> {
   console.log(`📧 [EMAIL STUB] Welcome email for ${user.name}`);
-  
+
   return sendEmail({
     to: user.email,
     subject: 'Welcome to Frontend Masters Wiki!',
@@ -40,40 +43,40 @@ export async function sendWelcomeEmail(user: { name: string; email: string }): P
         <li>Edit and improve content</li>
       </ul>
       <p>Happy writing!</p>
-    `
+    `,
   });
 }
 
 export async function sendPageUpdateNotification(
   page: { title: string; id: number },
-  users: Array<{ email: string; name: string }>
+  users: Array<{ email: string; name: string }>,
 ): Promise<boolean> {
   console.log(`📧 [EMAIL STUB] Page update notification for "${page.title}"`);
   console.log(`  Would notify ${users.length} users`);
-  
+
   // In production, send to all users
-  const emailPromises = users.map(user => 
+  const emailPromises = users.map((user) =>
     sendEmail({
       to: user.email,
       subject: `Wiki Page Updated: ${page.title}`,
-      text: `Hi ${user.name},\n\nThe wiki page "${page.title}" has been updated.\n\nView it here: /wiki/${page.id}\n\nBest regards,\nThe Wiki Team`
-    })
+      text: `Hi ${user.name},\n\nThe wiki page "${page.title}" has been updated.\n\nView it here: /wiki/${page.id}\n\nBest regards,\nThe Wiki Team`,
+    }),
   );
-  
+
   await Promise.all(emailPromises);
   return true;
 }
 
 export async function sendPasswordResetEmail(
   user: { email: string; name: string },
-  resetToken: string
+  resetToken: string,
 ): Promise<boolean> {
   console.log(`📧 [EMAIL STUB] Password reset for ${user.email}`);
   console.log(`  Reset token: ${resetToken}`);
-  
+
   return sendEmail({
     to: user.email,
     subject: 'Reset Your Password',
-    text: `Hi ${user.name},\n\nClick this link to reset your password: /reset-password?token=${resetToken}\n\nThis link expires in 1 hour.\n\nBest regards,\nThe Wiki Team`
+    text: `Hi ${user.name},\n\nClick this link to reset your password: /reset-password?token=${resetToken}\n\nThis link expires in 1 hour.\n\nBest regards,\nThe Wiki Team`,
   });
 }

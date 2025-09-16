@@ -26,18 +26,18 @@ async function ensureUploadDir() {
 export async function uploadFile(
   file: File | Buffer,
   filename: string,
-  mimeType: string
+  mimeType: string,
 ): Promise<UploadedFile> {
   console.log(`📁 [UPLOAD STUB] Uploading file: ${filename}`);
-  
+
   await ensureUploadDir();
-  
+
   // Generate unique filename to avoid collisions
   const timestamp = Date.now();
   const sanitizedName = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
   const uniqueFilename = `${timestamp}-${sanitizedName}`;
   const filePath = path.join(UPLOAD_DIR, uniqueFilename);
-  
+
   // Convert File to Buffer if needed
   let buffer: Buffer;
   if (Buffer.isBuffer(file)) {
@@ -46,27 +46,27 @@ export async function uploadFile(
     const arrayBuffer = await (file as File).arrayBuffer();
     buffer = Buffer.from(arrayBuffer);
   }
-  
+
   // Save file to disk
   await fs.writeFile(filePath, buffer);
-  
+
   const uploadedFile: UploadedFile = {
     url: `/uploads/${uniqueFilename}`,
     name: filename,
     size: buffer.length,
     type: mimeType,
-    uploadedAt: new Date().toISOString()
+    uploadedAt: new Date().toISOString(),
   };
-  
+
   console.log(`  ✅ File saved: ${uploadedFile.url}`);
   console.log(`  Size: ${(uploadedFile.size / 1024).toFixed(2)} KB`);
-  
+
   return uploadedFile;
 }
 
 export async function deleteFile(fileUrl: string): Promise<boolean> {
   console.log(`📁 [UPLOAD STUB] Deleting file: ${fileUrl}`);
-  
+
   try {
     const filename = path.basename(fileUrl);
     const filePath = path.join(UPLOAD_DIR, filename);
@@ -79,18 +79,20 @@ export async function deleteFile(fileUrl: string): Promise<boolean> {
   }
 }
 
-export async function getFileInfo(fileUrl: string): Promise<UploadedFile | null> {
+export async function getFileInfo(
+  fileUrl: string,
+): Promise<UploadedFile | null> {
   try {
     const filename = path.basename(fileUrl);
     const filePath = path.join(UPLOAD_DIR, filename);
     const stats = await fs.stat(filePath);
-    
+
     return {
       url: fileUrl,
       name: filename,
       size: stats.size,
       type: 'application/octet-stream', // Would need to store actual type
-      uploadedAt: stats.birthtime.toISOString()
+      uploadedAt: stats.birthtime.toISOString(),
     };
   } catch {
     return null;
@@ -108,9 +110,9 @@ export function validateFileType(mimeType: string): boolean {
     'text/plain',
     'text/markdown',
     'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   ];
-  
+
   return allowedTypes.includes(mimeType);
 }
 

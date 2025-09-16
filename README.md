@@ -21,6 +21,7 @@ npm run dev
 ## 📦 Tech Stack
 
 ### Current (Stubs)
+
 - **Framework**: Next.js 15 with App Router
 - **Styling**: Tailwind CSS + shadcn/ui (on edit page)
 - **Database**: In-memory JavaScript arrays
@@ -31,6 +32,7 @@ npm run dev
 - **Testing**: Vitest + Playwright (configured)
 
 ### Will Upgrade To
+
 - **Database**: Neon Postgres + Drizzle ORM
 - **Auth**: Stack Auth
 - **File Storage**: Vercel Blob
@@ -43,11 +45,11 @@ npm run dev
 
 The app includes three hardcoded users for testing permissions:
 
-| User | Email | Role | Permissions |
-|------|-------|------|-------------|
-| Admin User | admin@test.com | admin | Full access (view, create, edit, delete) |
-| Editor User | editor@test.com | editor | View, create, edit pages |
-| Viewer User | viewer@test.com | viewer | View pages only |
+| User        | Email           | Role   | Permissions                              |
+| ----------- | --------------- | ------ | ---------------------------------------- |
+| Admin User  | admin@test.com  | admin  | Full access (view, create, edit, delete) |
+| Editor User | editor@test.com | editor | View, create, edit pages                 |
+| Viewer User | viewer@test.com | viewer | View pages only                          |
 
 To switch users, visit `/login` and select a user.
 
@@ -88,6 +90,7 @@ npm run test:e2e    # Run E2E tests (Playwright)
 ## ✨ Features
 
 ### Working Features
+
 - ✅ View all wiki pages
 - ✅ Create new pages (editor/admin only)
 - ✅ Edit existing pages (editor/admin only)
@@ -99,6 +102,7 @@ npm run test:e2e    # Run E2E tests (Playwright)
 - ✅ Error handling and 404 pages
 
 ### Stub Features (Console.log)
+
 - 📧 Email notifications
 - 🤖 AI content generation
 - 📁 File storage (saves locally)
@@ -108,6 +112,7 @@ npm run test:e2e    # Run E2E tests (Playwright)
 ## 🎨 Styling Approach
 
 The app demonstrates two styling approaches:
+
 1. **Plain Tailwind CSS** - Most pages use simple Tailwind classes
 2. **shadcn/ui Components** - The edit page uses polished shadcn components
 
@@ -140,6 +145,7 @@ Throughout the codebase, you'll find `TODO:` comments marking where stubs will b
 ## 🚦 Getting Started as a Student
 
 1. **Clone and Install**
+
    ```bash
    git clone <repo-url>
    cd wiki

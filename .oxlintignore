@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+.playwright-mcp
+.data
+*.min.js
+*.config.js
+*.config.ts
+next-env.d.ts

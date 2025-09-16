@@ -10,7 +10,7 @@ interface EditPageProps {
 export default async function EditWikiPage({ params }: EditPageProps) {
   const { id } = await params;
   const pageId = parseInt(id, 10);
-  
+
   if (isNaN(pageId)) {
     notFound();
   }
@@ -23,7 +23,7 @@ export default async function EditWikiPage({ params }: EditPageProps) {
   }
 
   const page = await getPageById(pageId);
-  
+
   if (!page) {
     notFound();
   }

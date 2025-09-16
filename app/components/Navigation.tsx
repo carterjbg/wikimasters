@@ -13,26 +13,41 @@ export default function Navigation({ currentUser }: NavigationProps) {
       <nav className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="text-xl font-semibold text-gray-900 hover:text-gray-700 transition-colors">
+            <Link
+              href="/"
+              className="text-xl font-semibold text-gray-900 hover:text-gray-700 transition-colors"
+            >
               Wikimasters
             </Link>
             <div className="hidden sm:flex items-center gap-6">
-              <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+              <Link
+                href="/"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              >
                 All Pages
               </Link>
-              {currentUser && (currentUser.role === 'admin' || currentUser.role === 'editor') && (
-                <Link href="/wiki/new" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-                  New Page
-                </Link>
-              )}
+              {currentUser &&
+                (currentUser.role === 'admin' ||
+                  currentUser.role === 'editor') && (
+                  <Link
+                    href="/wiki/new"
+                    className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    New Page
+                  </Link>
+                )}
             </div>
           </div>
           <div className="flex items-center gap-4">
             {currentUser ? (
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <div className="text-sm font-medium text-gray-900">{currentUser.name}</div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider">{currentUser.role}</div>
+                  <div className="text-sm font-medium text-gray-900">
+                    {currentUser.name}
+                  </div>
+                  <div className="text-xs text-gray-500 uppercase tracking-wider">
+                    {currentUser.role}
+                  </div>
                 </div>
                 <Link
                   href="/login"

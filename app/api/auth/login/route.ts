@@ -7,19 +7,13 @@ export async function POST(request: NextRequest) {
     const { email } = body;
 
     if (!email) {
-      return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
     const user = await login(email);
-    
+
     if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid email' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Invalid email' }, { status: 401 });
     }
 
     // Cookie is set in the login function
@@ -29,14 +23,11 @@ export async function POST(request: NextRequest) {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role
-      }
+        role: user.role,
+      },
     });
   } catch (error) {
     console.error('Login error:', error);
-    return NextResponse.json(
-      { error: 'Failed to login' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to login' }, { status: 500 });
   }
 }
