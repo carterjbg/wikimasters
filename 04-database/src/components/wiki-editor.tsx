@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createArticle, updateArticle } from "@/app/actions/articles";
 import { uploadFile } from "@/app/actions/upload";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ export default function WikiEditor({
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   // Validate form
   const validateForm = (): boolean => {
@@ -100,10 +102,12 @@ export default function WikiEditor({
 
       if (isEditing && articleId) {
         await updateArticle(articleId, payload);
-        alert("Article updated (stub)");
+        // Redirect to home after successful update
+        router.push("/");
       } else {
         await createArticle(payload);
-        alert("Article created (stub)");
+        // Redirect to home after successful create
+        router.push("/");
       }
     } catch (err) {
       console.error("Error submitting article:", err);
@@ -185,7 +189,8 @@ export default function WikiEditor({
                     placeholder: "Write your article content in Markdown...",
                     style: { fontSize: 14, lineHeight: 1.5 },
                     // make these explicit so SSR and client output match exactly
-                    autoCapitalize: "off",
+                    // server-rendered HTML used autoCapitalize="none" — keep that value
+                    autoCapitalize: "none",
                     autoComplete: "off",
                     autoCorrect: "off",
                     spellCheck: false,
@@ -274,13 +279,14 @@ export default function WikiEditor({
                 variant="outline"
                 onClick={handleCancel}
                 disabled={isSubmitting}
+                className="cursor-pointer"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="min-w-[100px]"
+                className="min-w-[100px] cursor-pointer"
               >
                 {isSubmitting ? "Saving..." : "Save Article"}
               </Button>

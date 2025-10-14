@@ -4,7 +4,6 @@ import { eq } from "drizzle-orm";
 import { usersSync } from "drizzle-orm/neon";
 
 export async function getArticles() {
-  // TODO: Replace with actual database query
   const response = await db
     .select({
       title: articles.title,
