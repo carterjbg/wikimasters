@@ -1,9 +1,8 @@
-import db from "@/db/index";
-import { articles } from "@/db/schema";
-import type { Article } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { usersSync } from "drizzle-orm/neon";
 import redis from "@/cache";
+import db from "@/db/index";
+import { articles } from "@/db/schema";
 
 // The list view selects only a subset of Article fields and adds the author's
 // resolved name. Use a dedicated type for the list response.
@@ -62,7 +61,7 @@ export type ArticleWithAuthor = {
 };
 
 export async function getArticleById(
-  id: number
+  id: number,
 ): Promise<ArticleWithAuthor | null> {
   const response = await db
     .select({
