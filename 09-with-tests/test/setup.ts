@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 import { afterEach, beforeEach, vi } from "vitest";
 
 // Load base test env first, then local overrides written by global setup
-dotenv.config({ path: ".env.test" });
-dotenv.config({ path: ".env.test.local" });
+dotenv.config({ quiet: true, path: ".env.test" });
+dotenv.config({ quiet: true, path: ".env.test.local" });
 
 // Mock Next.js redirect function
 vi.mock("next/navigation", () => ({

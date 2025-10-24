@@ -17,14 +17,10 @@ export type ArticleList = {
 };
 
 export async function getArticles(): Promise<ArticleList[]> {
-  const cached = await redis.get<string>("articles:all");
+  const cached = await redis.get<ArticleList[]>("articles:all");
   if (cached) {
     console.log("🎯 Get Articles Cache Hit!");
-    try {
-      return JSON.parse(cached) as ArticleList[];
-    } catch (err) {
-      console.warn("Failed to parse cached articles, falling back to DB", err);
-    }
+    return cached;
   }
 
   const response = await db
@@ -61,7 +57,7 @@ export type ArticleWithAuthor = {
 };
 
 export async function getArticleById(
-  id: number,
+  id: number
 ): Promise<ArticleWithAuthor | null> {
   const response = await db
     .select({

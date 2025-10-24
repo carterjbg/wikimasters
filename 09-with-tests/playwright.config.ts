@@ -7,9 +7,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load environment variables from .env.test
-dotenv.config({ path: path.join(__dirname, ".env.test") });
+dotenv.config({ quiet: true, path: path.join(__dirname, ".env.test") });
 // Load .env.test.local if it exists (created by global setup)
-dotenv.config({ path: path.join(__dirname, ".env.test.local") });
+dotenv.config({ quiet: true, path: path.join(__dirname, ".env.test.local") });
 
 export default defineConfig({
   testDir: "./test/e2e",
