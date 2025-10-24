@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
-import { afterAll, afterEach, beforeAll, beforeEach, vi } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 
+// Load base test env first, then local overrides written by global setup
 dotenv.config({ path: ".env.test" });
+dotenv.config({ path: ".env.test.local" });
 
 // Mock Next.js redirect function
 vi.mock("next/navigation", () => ({
@@ -15,13 +17,6 @@ vi.mock("next/navigation", () => ({
 }));
 
 // Setup and cleanup hooks can be added here
-beforeAll(async () => {
-  // Setup code before all tests
-});
-
-afterAll(async () => {
-  // Cleanup code after all tests
-});
 
 beforeEach(async () => {
   // Setup code before each test

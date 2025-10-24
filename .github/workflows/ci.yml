@@ -50,6 +50,18 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 09-with-tests/package-lock.json
 
+      - name: Get Neon branch name
+        id: neon-branch-name
+        run: echo "BRANCH_NAME=unit-${{ github.run_id }}" >> "$GITHUB_ENV"
+
+      - name: Create Neon Branch
+        uses: neondatabase/create-branch-action@v6
+        id: create-neon-branch
+        with:
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          branch_name: ${{ env.BRANCH_NAME }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+
       - name: Install dependencies
         run: npm ci
 
@@ -59,6 +71,7 @@ jobs:
           NODE_ENV: test
           NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_BRANCH_NAME: ${{ env.BRANCH_NAME }}
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           NEXT_PUBLIC_STACK_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_STACK_PROJECT_ID }}
@@ -66,8 +79,15 @@ jobs:
           STACK_SECRET_SERVER_KEY: ${{ secrets.STACK_SECRET_SERVER_KEY }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-          DATABASE_URL: placeholder # Will be replaced by test setup
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+
+      - name: Delete Neon Branch
+        if: always()
+        uses: neondatabase/delete-branch-action@v3
+        with:
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          branch: ${{ env.BRANCH_NAME }}
+          api_key: ${{ secrets.NEON_API_KEY }}
 
   e2e-tests:
     name: E2E Tests
@@ -103,7 +123,6 @@ jobs:
           STACK_SECRET_SERVER_KEY: ${{ secrets.STACK_SECRET_SERVER_KEY }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-          DATABASE_URL: placeholder # Will be replaced by test setup
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
 
       - name: Upload Playwright report
