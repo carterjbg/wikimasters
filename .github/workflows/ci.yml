@@ -1,10 +1,16 @@
 name: CI
 
+# NOTE: THIS SETS A WORKING DIRECTORY. IF YOU'RE USING THIS FILE IN THE BASE OF YOUR PROJECT, YOU PROBABLY NEED TO REMOVE THE WORKING DIRECTORY
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+defaults:
+      run:
+        working-directory: ./09-with-tests
 
 jobs:
   lint-and-format:
