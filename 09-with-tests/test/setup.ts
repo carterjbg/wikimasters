@@ -1,10 +1,10 @@
-import { beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
-import dotenv from 'dotenv';
+import { beforeAll, afterAll, beforeEach, afterEach, vi } from "vitest";
+import dotenv from "dotenv";
 
-dotenv.config({ path: '.env.test' });
+dotenv.config({ path: ".env.test" });
 
 // Mock Next.js redirect function
-vi.mock('next/navigation', () => ({
+vi.mock("next/navigation", () => ({
   redirect: vi.fn(),
   useRouter: vi.fn(() => ({
     push: vi.fn(),
