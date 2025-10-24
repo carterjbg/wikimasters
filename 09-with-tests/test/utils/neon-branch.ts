@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execSync } from "node:child_process";
 
 interface NeonBranchResponse {
   branch: {
@@ -58,13 +58,13 @@ export class NeonBranchManager {
               },
             ],
           }),
-        }
+        },
       );
 
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Failed to create Neon branch: ${response.status} ${errorText}`
+          `Failed to create Neon branch: ${response.status} ${errorText}`,
         );
       }
 
@@ -80,13 +80,13 @@ export class NeonBranchManager {
             Accept: "application/json",
             Authorization: `Bearer ${this.apiKey}`,
           },
-        }
+        },
       );
 
       if (!rolesResponse.ok) {
         const errorText = await rolesResponse.text();
         throw new Error(
-          `Failed to get roles: ${rolesResponse.status} ${errorText}`
+          `Failed to get roles: ${rolesResponse.status} ${errorText}`,
         );
       }
 
@@ -104,13 +104,13 @@ export class NeonBranchManager {
             Accept: "application/json",
             Authorization: `Bearer ${this.apiKey}`,
           },
-        }
+        },
       );
 
       if (!connectionUriResponse.ok) {
         const errorText = await connectionUriResponse.text();
         throw new Error(
-          `Failed to get connection URI: ${connectionUriResponse.status} ${errorText}`
+          `Failed to get connection URI: ${connectionUriResponse.status} ${errorText}`,
         );
       }
 
@@ -135,13 +135,13 @@ export class NeonBranchManager {
             Accept: "application/json",
             Authorization: `Bearer ${this.apiKey}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Failed to delete Neon branch: ${response.status} ${errorText}`
+          `Failed to delete Neon branch: ${response.status} ${errorText}`,
         );
       }
 

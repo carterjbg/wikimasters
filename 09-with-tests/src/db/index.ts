@@ -8,7 +8,7 @@ const getDatabaseUrl = () => {
   const url = process.env.DATABASE_URL;
   if (!url) {
     // Return a placeholder URL that won't be used until tests set it
-    return 'postgresql://placeholder@localhost/placeholder';
+    return "postgresql://placeholder@localhost/placeholder";
   }
   return url;
 };

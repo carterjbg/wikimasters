@@ -128,8 +128,8 @@
 
 .w-md-editor-text-textarea,
 .w-md-editor-text {
-  color: hsl(var(--foreground)) !important;
-  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
 }
 
 .w-md-editor.w-md-editor-focus {

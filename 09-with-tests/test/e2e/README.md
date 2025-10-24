@@ -5,6 +5,7 @@ This directory contains end-to-end tests for the Wikimasters application using P
 ## Overview
 
 The E2E test suite covers:
+
 - **Authentication flows** (sign in, sign up, protected routes)
 - **Article CRUD operations** (create, read, update, delete)
 - **Authorization** (users can only edit their own articles)
@@ -58,20 +59,25 @@ Edit `.env.test.local` and fill in the required values:
 #### Required Variables
 
 **Neon Database:**
+
 ```bash
 NEON_PROJECT_ID=your-neon-project-id
 ```
+
 Get this from: https://console.neon.tech/
 
 **Stack Authentication:**
+
 ```bash
 NEXT_PUBLIC_STACK_PROJECT_ID=your-stack-project-id
 NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=your-stack-publishable-key
 STACK_SECRET_SERVER_KEY=your-stack-secret-key
 ```
+
 Get these from: https://app.stack-auth.com/
 
 **Test User Credentials:**
+
 ```bash
 TEST_USER_EMAIL=test@example.com
 TEST_USER_PASSWORD=your-test-password
@@ -80,6 +86,7 @@ TEST_USER_PASSWORD=your-test-password
 Create a test user in your Stack project first, then add the credentials here.
 
 **Other Required Services:**
+
 ```bash
 UPSTASH_REDIS_REST_URL=your-redis-url
 UPSTASH_REDIS_REST_TOKEN=your-redis-token
@@ -108,6 +115,7 @@ npm run test:e2e
 ```
 
 This will:
+
 1. Start the development server
 2. Run the authentication setup
 3. Run all test files
@@ -149,17 +157,22 @@ npx playwright test -g "should create a new article"
 ## Test Files
 
 ### `auth.setup.ts`
+
 Authentication setup that runs before all tests. Handles Stack login and saves the authentication state.
 
 ### `auth.spec.ts`
+
 Tests for authentication flows:
+
 - Sign in/up button visibility
 - Navigation to Stack auth pages
 - Protected route enforcement
 - Public page access
 
 ### `articles.spec.ts`
+
 Tests for article CRUD operations:
+
 - Creating articles with authentication
 - Updating own articles
 - Deleting articles
@@ -200,7 +213,7 @@ If tests are slow or timing out:
 
 If Stack updates their authentication UI:
 
-1. Open `e2e/auth.setup.ts`
+1. Open `test/e2e/auth.setup.ts`
 2. Update the selectors for email/password inputs
 3. Update the submit button selector
 4. Test locally with `npm run test:e2e:debug`
@@ -235,17 +248,27 @@ Add all required environment variables as secrets in your CI platform.
 ## Directory Structure
 
 ```
-e2e/
-├── README.md              # This file
-├── auth.setup.ts          # Authentication setup
-├── auth.spec.ts           # Authentication tests
-└── articles.spec.ts       # Article CRUD tests
+test/
+├── e2e/                   # E2E tests
+│   ├── README.md          # This file
+│   ├── auth.setup.ts      # Authentication setup
+│   ├── auth.spec.ts       # Authentication tests
+│   ├── articles.spec.ts   # Article CRUD tests
+│   ├── global-setup.ts    # Global setup (Neon branch creation)
+│   └── global-teardown.ts # Global teardown (Neon branch deletion)
+├── unit/                  # Unit tests
+│   ├── articles.test.ts   # Article actions unit tests
+│   └── example.test.ts    # Example unit tests
+├── mocks/                 # Test mocks
+├── utils/                 # Test utilities (Neon branch manager)
+└── setup.ts               # Vitest setup
 
 playwright/
 └── .auth/                 # Saved authentication state (gitignored)
     └── user.json          # Logged-in user session
 
 playwright.config.ts       # Playwright configuration
+vitest.config.ts          # Vitest configuration
 .env.test.local           # Test environment variables (gitignored)
 .env.test.local.example   # Template for environment variables
 ```
