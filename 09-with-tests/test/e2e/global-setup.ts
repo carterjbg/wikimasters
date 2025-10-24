@@ -2,7 +2,7 @@ import type { ChildProcess } from "node:child_process";
 import { spawn } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { NeonBranchManager } from "../test/utils/neon-branch";
+import { NeonBranchManager } from "../utils/neon-branch";
 
 let devServer: ChildProcess | null = null;
 
@@ -12,7 +12,7 @@ async function globalSetup() {
 
   if (!projectId || !apiKey) {
     console.error(
-      "NEON_PROJECT_ID and NEON_API_KEY are required for E2E tests",
+      "NEON_PROJECT_ID and NEON_API_KEY are required for E2E tests"
     );
     throw new Error("Missing Neon credentials");
   }
@@ -35,7 +35,7 @@ async function globalSetup() {
 
   writeFileSync(
     join(process.cwd(), ".test-branch-info.json"),
-    JSON.stringify(branchInfo, null, 2),
+    JSON.stringify(branchInfo, null, 2)
   );
 
   // Write DATABASE_URL to .env.test.local so the dev server can pick it up
@@ -62,7 +62,7 @@ async function globalSetup() {
   // Store the server process ID for teardown
   writeFileSync(
     join(process.cwd(), ".test-server-pid.json"),
-    JSON.stringify({ pid: devServer.pid }, null, 2),
+    JSON.stringify({ pid: devServer.pid }, null, 2)
   );
 }
 

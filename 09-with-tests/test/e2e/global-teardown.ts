@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
-import { NeonBranchManager } from "../test/utils/neon-branch";
+import { NeonBranchManager } from "../utils/neon-branch";
 
 async function globalTeardown() {
   // Kill the dev server first
@@ -30,7 +30,7 @@ async function globalTeardown() {
 
     if (!projectId || !apiKey) {
       console.error(
-        "NEON_PROJECT_ID and NEON_API_KEY are required for cleanup",
+        "NEON_PROJECT_ID and NEON_API_KEY are required for cleanup"
       );
       return;
     }
