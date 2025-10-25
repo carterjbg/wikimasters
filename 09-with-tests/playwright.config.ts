@@ -17,7 +17,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: process.env.CI ? "list" : "html",
+  reporter: process.env.CI ? "github" : "html",
   globalSetup: path.join(__dirname, "./test/e2e/global-setup.ts"),
   globalTeardown: path.join(__dirname, "./test/e2e/global-teardown.ts"),
   use: {

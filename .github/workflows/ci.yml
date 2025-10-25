@@ -158,22 +158,6 @@ jobs:
           BLOB_BASE_URL: ${{ secrets.BLOB_BASE_URL }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
-      - name: Upload Playwright report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: 09-with-tests/playwright-report/
-          retention-days: 7
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: 09-with-tests/test-results/
-          retention-days: 7
-
       - name: Delete Neon Branch
         if: always()
         uses: neondatabase/delete-branch-action@v3
