@@ -5,7 +5,7 @@ import { expect, test as setup } from "@playwright/test";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const authFile = path.join(__dirname, "../playwright/.auth/user.json");
+const authFile = path.join(__dirname, "../../playwright/.auth/user.json");
 
 setup("authenticate", async ({ page }) => {
   // Check if we need Stack credentials
@@ -15,7 +15,7 @@ setup("authenticate", async ({ page }) => {
 
   if (!stackProjectId || !stackPublishableKey) {
     throw new Error(
-      "Stack credentials not found. Please set NEXT_PUBLIC_STACK_PROJECT_ID and NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY in your .env.test.local file",
+      "Stack credentials not found. Please set NEXT_PUBLIC_STACK_PROJECT_ID and NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY in your .env.test.local file"
     );
   }
 
@@ -32,7 +32,7 @@ setup("authenticate", async ({ page }) => {
   if (!testEmail || !testPassword) {
     console.warn("⚠️  TEST_USER_EMAIL and TEST_USER_PASSWORD not set.");
     console.warn(
-      "⚠️  Please create a test user in Stack and set these credentials.",
+      "⚠️  Please create a test user in Stack and set these credentials."
     );
     console.warn("⚠️  Skipping authentication setup...");
     return;
@@ -66,7 +66,7 @@ setup("authenticate", async ({ page }) => {
     await expect(
       page
         .locator("text=New Article")
-        .or(page.locator('[data-testid="user-menu"]')),
+        .or(page.locator('[data-testid="user-menu"]'))
     ).toBeVisible({ timeout: 5000 });
 
     console.log("✅ Authentication successful");
@@ -84,7 +84,7 @@ setup("authenticate", async ({ page }) => {
         "1. TEST_USER_EMAIL and TEST_USER_PASSWORD are correct\n" +
         "2. The test user exists in your Stack project\n" +
         "3. Stack selectors match the actual UI (check auth-error.png screenshot)\n" +
-        `Error: ${error}`,
+        `Error: ${error}`
     );
   }
 });
