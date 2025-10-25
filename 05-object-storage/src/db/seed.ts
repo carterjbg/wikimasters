@@ -167,7 +167,7 @@ Because sometimes you want React's developer experience with better performance.
 
     if (users.length === 0) {
       console.error(
-        "❌ No users found in the database. Seed cannot assign authorId without existing users."
+        "❌ No users found in the database. Seed cannot assign authorId without existing users.",
       );
       process.exit(1);
     }
@@ -177,7 +177,7 @@ Because sometimes you want React's developer experience with better performance.
       const userIndex = Math.min(idx, users.length - 1);
       const assignedUser = users[userIndex];
       console.log(
-        `➡️  Record ${idx + 1} ('${rec.slug}') -> user id: ${assignedUser.id}`
+        `➡️  Record ${idx + 1} ('${rec.slug}') -> user id: ${assignedUser.id}`,
       );
       return {
         ...rec,
@@ -186,7 +186,7 @@ Because sometimes you want React's developer experience with better performance.
     });
 
     console.log(
-      `📝 Inserting ${mapped.length} article(s) into the database...`
+      `📝 Inserting ${mapped.length} article(s) into the database...`,
     );
     await db.insert(articles).values(mapped);
 
