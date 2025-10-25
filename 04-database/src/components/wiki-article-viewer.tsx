@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import ReactMarkdown from "react-markdown";
-import { Edit, Home, ChevronRight, Calendar, User, Trash } from "lucide-react";
+import { Calendar, ChevronRight, Edit, Home, Trash, User } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import { deleteArticleForm } from "@/app/actions/articles";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ViewerArticle {
   title: string;

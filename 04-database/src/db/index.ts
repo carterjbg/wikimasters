@@ -2,8 +2,10 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "@/db/schema";
 import "dotenv/config";
+import assert from "node:assert";
 
-const sql = neon(process.env.DATABASE_URL!);
+assert(process.env.DATABASE_URL, "DATABASE_URL must be defined");
+const sql = neon(process.env.DATABASE_URL);
 const db = drizzle(sql, { schema });
 
 export default db;

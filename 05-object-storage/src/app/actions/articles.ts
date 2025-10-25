@@ -1,11 +1,11 @@
 "use server";
 
-import { stackServerApp } from "@/stack/server";
-import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
+import { authorizeUserToEditArticle } from "@/db/authz";
 import db from "@/db/index";
 import { articles } from "@/db/schema";
-import { authorizeUserToEditArticle } from "@/db/authz";
+import { stackServerApp } from "@/stack/server";
 
 // Server actions for articles (stubs)
 // TODO: Replace with real database operations when ready
@@ -30,10 +30,10 @@ export async function createArticle(data: CreateArticleInput) {
   }
   console.log("✨ createArticle called:", data);
 
-  const response = await db.insert(articles).values({
+  const _response = await db.insert(articles).values({
     title: data.title,
     content: data.content,
-    slug: "" + Date.now(),
+    slug: `${Date.now()}`,
     published: true,
     authorId: user.id,
     imageUrl: data.imageUrl ?? undefined,
@@ -54,7 +54,7 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
 
   console.log("📝 updateArticle called:", { id, ...data });
 
-  const response = await db
+  const _response = await db
     .update(articles)
     .set({
       title: data.title,
@@ -78,7 +78,7 @@ export async function deleteArticle(id: string) {
 
   console.log("🗑️ deleteArticle called:", id);
 
-  const response = await db.delete(articles).where(eq(articles.id, +id));
+  const _response = await db.delete(articles).where(eq(articles.id, +id));
 
   return { success: true, message: `Article ${id} delete logged (stub)` };
 }

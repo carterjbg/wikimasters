@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { Article, ApiResponse } from "@/types/api";
+import { type NextRequest, NextResponse } from "next/server";
+import type { ApiResponse, Article } from "@/types/api";
 
 // Mock articles data - in real app, this would come from database
 const mockArticles: Article[] = [
@@ -36,7 +36,7 @@ interface RouteParams {
 }
 
 // GET /api/articles/[id] - Return single article by ID
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(_request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
   console.log(`📄 API: Getting article with ID: ${id}`);
 
@@ -153,7 +153,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 // DELETE /api/articles/[id] - Delete article
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(_request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
   console.log(`🗑️ API: Deleting article with ID: ${id}`);
 

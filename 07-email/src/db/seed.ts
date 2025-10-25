@@ -1,8 +1,9 @@
 // Clean seed script with emoji logging and deterministic user assignment
-import db from "@/db/index";
-import { articles } from "@/db/schema";
+
 import { sql } from "drizzle-orm";
 import { usersSync } from "drizzle-orm/neon";
+import db from "@/db/index";
+import { articles } from "@/db/schema";
 
 async function main() {
   try {

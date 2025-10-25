@@ -1,3 +1,4 @@
+import type { CurrentUser } from "@stackframe/stack";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import summarizeArticle from "@/ai/summarize";
 import {
@@ -19,7 +20,26 @@ vi.mock("@/cache");
 vi.mock("@/ai/summarize");
 
 describe("Article Actions", () => {
-  const mockUser = { id: "user-123", email: "test@example.com" };
+  const mockUser = {
+    id: "user-123",
+    // minimal fields from Stack's CurrentUser / BaseUser shape used in tests
+    displayName: null,
+    primaryEmail: "test@example.com",
+    primaryEmailVerified: true,
+    profileImageUrl: null,
+    signedUpAt: new Date(),
+    clientMetadata: {},
+    clientReadOnlyMetadata: {},
+    hasPassword: false,
+    emailAuthEnabled: false,
+    otpAuthEnabled: false,
+    passkeyAuthEnabled: false,
+    isMultiFactorRequired: false,
+    isAnonymous: false,
+    oauthProviders: [],
+    // helper used by the stack runtime; provide a simple stub
+    toClientJson: () => ({}) as unknown,
+  } as unknown as CurrentUser;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -35,7 +55,7 @@ describe("Article Actions", () => {
         values: vi.fn().mockReturnValue({
           returning: vi.fn().mockResolvedValue([{ id: 1 }]),
         }),
-      } as any);
+      } as unknown as ReturnType<typeof db.insert>);
 
       const articleData = {
         title: "Test Article",
@@ -73,7 +93,7 @@ describe("Article Actions", () => {
         values: vi.fn().mockReturnValue({
           returning: vi.fn().mockResolvedValue([{ id: 1 }]),
         }),
-      } as any);
+      } as unknown as ReturnType<typeof db.insert>);
 
       const articleData = {
         title: "Test Article",
@@ -107,7 +127,7 @@ describe("Article Actions", () => {
         set: mockUpdate.mockReturnValue({
           where: vi.fn().mockResolvedValue({ id: 1 }),
         }),
-      } as any);
+      } as unknown as ReturnType<typeof db.update>);
 
       const updateData = {
         title: "Updated Title",
@@ -158,7 +178,7 @@ describe("Article Actions", () => {
       });
       vi.mocked(db.delete).mockReturnValue({
         where: mockDelete,
-      } as any);
+      } as unknown as ReturnType<typeof db.delete>);
 
       const result = await deleteArticle("1");
 

@@ -1,8 +1,8 @@
-import WikiArticleViewer from "@/components/wiki-article-viewer";
-import { getArticleById } from "@/lib/data/articles";
 import { notFound } from "next/navigation";
-import { stackServerApp } from "@/stack/server";
+import WikiArticleViewer from "@/components/wiki-article-viewer";
 import { authorizeUserToEditArticle } from "@/db/authz";
+import { getArticleById } from "@/lib/data/articles";
+import { stackServerApp } from "@/stack/server";
 
 interface ViewArticlePageProps {
   params: Promise<{
@@ -24,7 +24,7 @@ export default async function ViewArticlePage({
     if (user) {
       canEdit = await authorizeUserToEditArticle(user.id, +id);
     }
-  } catch (err) {
+  } catch (_err) {
     // On error, default to not allowing edits. Keeps behavior safe.
     canEdit = false;
   }

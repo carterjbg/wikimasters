@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import ReactMarkdown from "react-markdown";
 import {
-  Edit,
-  Home,
-  ChevronRight,
   Calendar,
-  User,
-  Trash,
+  ChevronRight,
+  Edit,
   Eye,
+  Home,
+  Trash,
+  User,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { deleteArticleForm } from "@/app/actions/articles";
 import { incrementPageview } from "@/app/actions/pageviews";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ViewerArticle {
   title: string;
@@ -50,7 +50,7 @@ export default function WikiArticleViewer({
       setLocalPageviews(newCount ?? null);
     }
     fetchPageview();
-  }, []);
+  }, [article.id]);
 
   // Format date for display
   const formatDate = (dateString: string) => {

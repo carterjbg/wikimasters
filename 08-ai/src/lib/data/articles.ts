@@ -1,8 +1,8 @@
-import db from "@/db/index";
-import { articles } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { usersSync } from "drizzle-orm/neon";
 import redis from "@/cache";
+import db from "@/db/index";
+import { articles } from "@/db/schema";
 
 export async function getArticles() {
   const cached = await redis.get("articles:all");

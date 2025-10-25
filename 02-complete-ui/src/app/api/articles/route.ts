@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { Article, ApiResponse } from "@/types/api";
+import { type NextRequest, NextResponse } from "next/server";
+import type { ApiResponse, Article } from "@/types/api";
 
 // Mock articles data - in real app, this would come from database
 const mockArticles: Article[] = [

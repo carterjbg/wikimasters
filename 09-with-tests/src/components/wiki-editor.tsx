@@ -19,12 +19,6 @@ interface WikiEditorProps {
   articleId?: string;
 }
 
-interface FormData {
-  title: string;
-  content: string;
-  files: File[];
-}
-
 interface FormErrors {
   title?: string;
   content?: string;

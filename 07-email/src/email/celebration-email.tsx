@@ -1,8 +1,8 @@
-import resend from "@/email";
-import db from "@/db";
-import { usersSync } from "drizzle-orm/neon";
-import { articles } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { usersSync } from "drizzle-orm/neon";
+import db from "@/db";
+import { articles } from "@/db/schema";
+import resend from "@/email";
 import CelebrationTemplate from "./templates/celebration-template";
 
 const BASE_URL = "http://localhost:3000"; // we should set this somewhere else

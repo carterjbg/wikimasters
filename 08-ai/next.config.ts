@@ -1,10 +1,16 @@
+import assert from "node:assert";
+import { dirname } from "node:path";
 import type { NextConfig } from "next";
 
+assert(process.env.BLOB_BASE_URL, "you must have defined BLOB_BASE_URL");
+
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      new URL("https://wc7fqa2b9wf5r2ws.public.blob.vercel-storage.com/**"),
-    ],
+    remotePatterns: [new URL(process.env.BLOB_BASE_URL)],
+  },
+  turbopack: {
+    root: dirname(__filename),
   },
 };
 

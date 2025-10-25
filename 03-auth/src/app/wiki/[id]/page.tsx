@@ -1,6 +1,6 @@
+import { notFound } from "next/navigation";
 import WikiArticleViewer from "@/components/wiki-article-viewer";
 import { getArticleById } from "@/lib/data/articles";
-import { notFound } from "next/navigation";
 
 interface ViewArticlePageProps {
   params: Promise<{

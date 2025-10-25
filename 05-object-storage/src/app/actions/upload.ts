@@ -1,7 +1,7 @@
 "use server";
 
-import { stackServerApp } from "@/stack/server";
 import { put } from "@vercel/blob";
+import { stackServerApp } from "@/stack/server";
 
 // Server action to handle uploads (stub)
 
@@ -27,7 +27,7 @@ export async function uploadFile(formData: FormData): Promise<UploadedFile> {
 
   console.log(
     "📤 uploadFile called, received files:",
-    files.map((f) => ({ name: f.name, size: f.size, type: f.type })),
+    files.map((f) => ({ name: f.name, size: f.size, type: f.type }))
   );
 
   if (!file) {
@@ -48,11 +48,14 @@ export async function uploadFile(formData: FormData): Promise<UploadedFile> {
       addRandomSuffix: true,
     });
 
+    type VercelBlobResult = { url?: string; pathname?: string };
+    const blobResult = blob as unknown as VercelBlobResult;
+
     return {
-      url: (blob as any).url ?? "",
+      url: blobResult.url ?? "",
       size: file.size,
       type: file.type,
-      filename: (blob as any).pathname ?? file.name,
+      filename: blobResult.pathname ?? file.name,
     };
   } catch (err) {
     console.error("❌ Vercel Blob upload error:", err);

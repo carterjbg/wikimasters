@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { FileUploadResponse } from "@/types/api";
+import { type NextRequest, NextResponse } from "next/server";
+import type { FileUploadResponse } from "@/types/api";
 
 // POST /api/upload - Handle file uploads
 export async function POST(request: NextRequest) {

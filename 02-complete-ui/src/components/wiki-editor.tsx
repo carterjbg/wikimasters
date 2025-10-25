@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import MDEditor from "@uiw/react-md-editor";
 import { Upload, X } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface WikiEditorProps {
   initialTitle?: string;
@@ -100,7 +101,7 @@ export default function WikiEditor({
     alert(
       `Article ${
         isEditing ? "updated" : "created"
-      } successfully! Check console for form data.`,
+      } successfully! Check console for form data.`
     );
   };
 
@@ -108,7 +109,7 @@ export default function WikiEditor({
   const handleCancel = () => {
     // In a real app, you would navigate back
     const shouldLeave = window.confirm(
-      "Are you sure you want to cancel? Any unsaved changes will be lost.",
+      "Are you sure you want to cancel? Any unsaved changes will be lost."
     );
     if (shouldLeave) {
       console.log("User cancelled editing");
@@ -222,6 +223,7 @@ export default function WikiEditor({
                   <div className="space-y-2">
                     {files.map((file, index) => (
                       <div
+                        // biome-ignore lint/suspicious/noArrayIndexKey: the order won't change
                         key={index}
                         className="flex items-center justify-between p-2 bg-muted rounded-md"
                       >

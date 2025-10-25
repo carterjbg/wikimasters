@@ -1,13 +1,13 @@
 "use server";
 
-import { stackServerApp } from "@/stack/server";
-import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
+import summarizeArticle from "@/ai/summarize";
+import redis from "@/cache";
+import { authorizeUserToEditArticle } from "@/db/authz";
 import db from "@/db/index";
 import { articles } from "@/db/schema";
-import { authorizeUserToEditArticle } from "@/db/authz";
-import redis from "@/cache";
-import summarizeArticle from "@/ai/summarize";
+import { stackServerApp } from "@/stack/server";
 
 export type CreateArticleInput = {
   title: string;
@@ -31,10 +31,10 @@ export async function createArticle(data: CreateArticleInput) {
 
   const summary = await summarizeArticle(data.title || "", data.content || "");
 
-  const response = await db.insert(articles).values({
+  const _response = await db.insert(articles).values({
     title: data.title,
     content: data.content,
-    slug: "" + Date.now(),
+    slug: `${Date.now()}`,
     published: true,
     authorId: user.id,
     imageUrl: data.imageUrl ?? undefined,
@@ -59,7 +59,7 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
 
   const summary = await summarizeArticle(data.title || "", data.content || "");
 
-  const response = await db
+  const _response = await db
     .update(articles)
     .set({
       title: data.title,
@@ -84,7 +84,7 @@ export async function deleteArticle(id: string) {
 
   console.log("🗑️ deleteArticle called:", id);
 
-  const response = await db.delete(articles).where(eq(articles.id, +id));
+  const _response = await db.delete(articles).where(eq(articles.id, +id));
 
   return { success: true, message: `Article ${id} delete logged (stub)` };
 }
