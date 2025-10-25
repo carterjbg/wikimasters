@@ -57,7 +57,7 @@ export type ArticleWithAuthor = {
 };
 
 export async function getArticleById(
-  id: number
+  id: number,
 ): Promise<ArticleWithAuthor | null> {
   const response = await db
     .select({

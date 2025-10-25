@@ -39,7 +39,7 @@ async function globalSetup() {
   // Store the server process ID for teardown
   writeFileSync(
     join(process.cwd(), ".test-server-pid.json"),
-    JSON.stringify({ pid: devServer.pid }, null, 2)
+    JSON.stringify({ pid: devServer.pid }, null, 2),
   );
 }
 

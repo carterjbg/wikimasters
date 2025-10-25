@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       // In real app: upload to storage and get real URL
       const mockUrl = `/uploads/${Date.now()}-${file.name.replace(
         /\s+/g,
-        "-"
+        "-",
       )}`;
 
       const fileInfo = {
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
       uploadedFiles.push(fileInfo);
       console.log(
-        `✅ API: File processed successfully: ${file.name} -> ${mockUrl}`
+        `✅ API: File processed successfully: ${file.name} -> ${mockUrl}`,
       );
     }
 
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       uploadedFiles.length === 1 ? uploadedFiles[0] : { files: uploadedFiles };
 
     console.log(
-      `✅ API: Successfully uploaded ${uploadedFiles.length} file(s)`
+      `✅ API: Successfully uploaded ${uploadedFiles.length} file(s)`,
     );
 
     const response: FileUploadResponse & { data?: any } = {
@@ -133,6 +133,6 @@ export async function GET() {
       success: true,
       data: uploadConfig,
     },
-    { status: 200 }
+    { status: 200 },
   );
 }

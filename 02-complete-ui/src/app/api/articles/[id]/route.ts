@@ -181,7 +181,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     }
 
     console.log(
-      `✅ API: Article deleted successfully: ${existingArticle.title}`
+      `✅ API: Article deleted successfully: ${existingArticle.title}`,
     );
 
     const response: ApiResponse<{ deletedId: string }> = {
