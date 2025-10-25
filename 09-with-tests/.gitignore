@@ -47,3 +47,4 @@ next-env.d.ts
 .env.test.local
 .test-branch-info.json
 .test-server-pid.json
+test/playwright/.auth*

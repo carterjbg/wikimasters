@@ -16,6 +16,13 @@ vi.mock("next/navigation", () => ({
   usePathname: vi.fn(),
 }));
 
+// Mock the AI summarize service globally
+vi.mock("@/ai/summarize", () => ({
+  __esModule: true,
+  default: vi.fn().mockResolvedValue("This is a test summary."),
+  summarizeArticle: vi.fn().mockResolvedValue("This is a test summary."),
+}));
+
 // Setup and cleanup hooks can be added here
 
 beforeEach(async () => {

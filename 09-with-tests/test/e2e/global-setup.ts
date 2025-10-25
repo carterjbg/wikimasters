@@ -11,10 +11,23 @@ async function globalSetup() {
 
   // ...existing code...
 
-  // Start the dev server
-  console.log("Starting dev server...");
-  devServer = spawn("npm", ["run", "dev"], {
-    env: process.env,
+  // Build and start the production server for tests
+  console.log("Building Next.js app...");
+  await new Promise((resolve, reject) => {
+    const build = spawn("npm", ["run", "build"], {
+      env: { ...process.env, PLAYWRIGHT: "1" },
+      stdio: "inherit",
+      shell: true,
+    });
+    build.on("exit", (code) => {
+      if (code === 0) resolve(undefined);
+      else reject(new Error(`npm run build failed with code ${code}`));
+    });
+  });
+
+  console.log("Starting production server...");
+  devServer = spawn("npm", ["run", "start"], {
+    env: { ...process.env, PLAYWRIGHT: "1" },
     stdio: "inherit",
     shell: true,
   });
