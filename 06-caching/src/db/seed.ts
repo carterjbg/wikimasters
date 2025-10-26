@@ -1,197 +1,81 @@
-// Clean seed script with emoji logging and deterministic user assignment
-
-import { sql } from "drizzle-orm";
 import { usersSync } from "drizzle-orm/neon";
+import { seed, reset } from "drizzle-seed";
 import db from "@/db/index";
 import { articles } from "@/db/schema";
 
+const SEED_COUNT = 25;
+const SEED = 1337;
+
 async function main() {
   try {
-    console.log("🌱 Starting DB seed...");
+    console.log(`🌱 Starting DB seed with seed ${SEED}...`);
 
-    console.log("🧹 Truncating articles table...");
-    await db.execute(sql`TRUNCATE TABLE articles RESTART IDENTITY CASCADE`);
-
-    const seedData = [
-      {
-        title: "Next.js: The Swiss Army Knife of React Frameworks",
-        slug: "nextjs-swiss-army-knife",
-        content: `# Next.js: The Swiss Army Knife of React Frameworks
-
-Next.js is what happens when Vercel looks at React and says "we can make this better" and then actually does it. It's the meta-framework that took over the world by making server-side rendering not completely terrible.
-
-## What Makes Next.js Special
-- App Router vs Pages Router (choose your own adventure!)
-- Server Components that actually make sense (after the third tutorial)
-- Image optimization that's basically magic
-- Deploys to Vercel in approximately 2 clicks
-- Breaking changes in every major version (keeps you on your toes!)
-
-## The Next.js Journey
-**Version 1-12**: "This is pretty neat!"
-**Version 13**: "Wait, everything changed?"
-**Version 14-15**: "Okay, this is actually amazing."
-
-## Why Developers Love It
-Next.js has thought of everything. File-based routing? Check. API routes? Got it. ISR, SSR, SSG, and every other acronym? Absolutely. It's like they read your mind and then implemented it before you even asked.
-
-## The Vercel Effect
-Sure, Next.js works on other platforms, but deploying to Vercel feels like cheating. It's so smooth you'll wonder if you did something wrong.
-
-**Best For**: Production apps, showing off at parties, getting hired.`,
-        imageUrl: "/images/nextjs.jpg",
-        published: true,
-        createdAt: "2024-12-18T10:00:00Z",
-        updatedAt: "2024-12-18T10:00:00Z",
-      },
-      {
-        title: "TanStack Start: The New Kid with Ambitious Energy",
-        slug: "tanstack-start-new-kid",
-        content: `# TanStack Start: The New Kid with Ambitious Energy
-
-Tanner Linsley looked at the meta-framework landscape and thought "I can bring something new here." And honestly? He might be right. TanStack Start is the full-stack framework that brings TanStack's legendary DX to the server.
-
-## What's Different
-- Framework agnostic (React, Vue, Solid, Svelte - pick your poison)
-- Built by the TanStack Query legend himself
-- Type-safety so good it feels like cheating
-- File-based routing that doesn't make assumptions
-- Still in beta but already feels production-ready
-
-## The TanStack Philosophy
-If you've used TanStack Query (and you should), you know Tanner doesn't ship things half-baked. Start brings that same polish to full-stack development.
-
-## Why It's Exciting
-TanStack Start isn't trying to be the next Next.js—it's trying to be the framework-agnostic solution we didn't know we needed. Use React today, switch to Solid tomorrow, same great DX.
-
-## The Learning Curve
-If you know TanStack Query, you're already halfway there. If you don't, prepare to level up your entire data fetching game.
-
-**Best For**: Early adopters, TanStack fans, people who like options.`,
-        imageUrl: "/images/tanstack.jpg",
-        published: true,
-        createdAt: "2024-12-17T14:30:00Z",
-        updatedAt: "2024-12-17T14:30:00Z",
-      },
-      {
-        title: "Remix: Web Fundamentals, But Make It Modern",
-        slug: "remix-web-fundamentals-modern",
-        content: `# Remix: Web Fundamentals, But Make It Modern
-
-Remix looked at the web platform and said "actually, the browser already does this" and then built a framework around that philosophy. It's like if React Router grew up and got really into progressive enhancement.
-
-## The Remix Way
-- Nested routes that make sense
-- Forms that work without JavaScript (witchcraft!)
-- Loaders and actions (fancy names for GET and POST)
-- Error boundaries everywhere (catch those bugs!)
-- Built by the React Router team (they know routing)
-
-## Why Developers Get It
-Once Remix clicks, it REALLY clicks. You stop fighting against the platform and start working with it. It's like learning to write HTML again, but better.
-
-## The Philosophy
-Remix believes the web platform is actually pretty good, and we should use it instead of reinventing everything. Controversial take in 2024, but they make it work.
-
-## Shopify Acquisition
-Shopify bought Remix and now it powers Hydrogen. That's like a seal of approval made of money.
-
-**Best For**: Web fundamentalists, form enthusiasts, progressive enhancement fans.`,
-        imageUrl: "/images/remix.jpg",
-        published: true,
-        createdAt: "2024-12-16T11:15:00Z",
-        updatedAt: "2024-12-16T11:15:00Z",
-      },
-      {
-        title: "SvelteKit: Svelte Grows Up and Gets a Framework",
-        slug: "sveltekit-svelte-grows-up",
-        content: `# SvelteKit: Svelte Grows Up and Gets a Framework
-
-SvelteKit is what happens when Svelte stops being just a component framework and starts being a full application solution. Spoiler: it's really good and the developer experience is *chef's kiss*.
-
-## What Makes It Special
-- No virtual DOM (Svelte compiles away)
-- Filesystem routing that feels intuitive
-- Form actions that are actually pleasant to use
-- Adapters for every platform imaginable
-- The bundle sizes that make other frameworks jealous
-
-## The Svelte DX
-Svelte already had best-in-class developer experience, and SvelteKit just multiplies that. Writing SvelteKit feels less like coding and more like telling the computer what you want.
-
-## Why It's Great
-Less boilerplate, more productivity. SvelteKit doesn't make you jump through hoops—it just gets out of your way and lets you build.
-
-## The Community
-Smaller than React's ecosystem, but proportionally more enthusiastic. Everyone who uses Svelte won't shut up about it (in a good way).
-
-**Best For**: People who value DX, bundle size enthusiasts, JavaScript minimalists.`,
-        imageUrl: "/images/sveltekit.jpg",
-        published: true,
-        createdAt: "2024-12-15T09:45:00Z",
-        updatedAt: "2024-12-15T09:45:00Z",
-      },
-      {
-        title: "Solid Start: Fine-Grained Reactivity Meets Full-Stack",
-        slug: "solid-start-fine-grained-reactivity",
-        content: `# Solid Start: Fine-Grained Reactivity Meets Full-Stack
-
-Solid Start brings SolidJS's blazing-fast reactivity to the full-stack world, and the results are impressive. It's like React but with performance that makes you question everything you knew about rendering.
-
-## The Solid Advantage
-- Fine-grained reactivity (only update what changed)
-- JSX that looks familiar but performs better
-- No virtual DOM overhead
-- Ryan Carniato's big brain energy in framework form
-- Performance benchmarks that seem too good to be true (they're real)
-
-## What It Brings
-Solid Start takes everything great about SolidJS and adds routing, server functions, and deployment adapters. It's the full-stack experience Solid developers have been waiting for.
-
-## The Learning Curve
-If you know React, Solid looks familiar. But under the hood, it's completely different—in the best way. Your muscle memory works but your apps run faster.
-
-## Why Consider It
-Because sometimes you want React's developer experience with better performance. Solid Start delivers that without making you rewrite your mental model.
-
-**Best For**: Performance perfectionists, React developers seeking speed, people who read benchmarks for fun.`,
-        imageUrl: "/images/solidstart.jpg",
-        published: true,
-        createdAt: "2024-12-14T16:20:00Z",
-        updatedAt: "2024-12-14T16:20:00Z",
-      },
-    ];
+    console.log("🧹 Reseting existing articles table...");
+    await reset(db, { articles });
 
     console.log("🔎 Querying existing users...");
-    const users = await db.select().from(usersSync).orderBy(usersSync.id);
+    const users = await db
+      .select({ id: usersSync.id })
+      .from(usersSync)
+      .orderBy(usersSync.id);
+    const ids = users.map((user) => user.id);
     console.log(`👥 Found ${users.length} user(s)`);
 
     if (users.length === 0) {
       console.error(
-        "❌ No users found in the database. Seed cannot assign authorId without existing users.",
+        "❌ No users found in the database. Seed cannot assign authorId without existing users."
       );
       process.exit(1);
     }
 
-    console.log("🧩 Mapping seed data to users deterministically...");
-    const mapped = seedData.map((rec, idx) => {
-      const userIndex = Math.min(idx, users.length - 1);
-      const assignedUser = users[userIndex];
-      console.log(
-        `➡️  Record ${idx + 1} ('${rec.slug}') -> user id: ${assignedUser.id}`,
-      );
-      return {
-        ...rec,
-        authorId: assignedUser.id,
-      };
-    });
+    console.log("🍩 Using drizzle-seed...");
+    await seed(db, { articles }, { seed: SEED }).refine((funcs) => ({
+      articles: {
+        count: SEED_COUNT,
+        columns: {
+          authorId: funcs.valuesFromArray({
+            values: ids,
+            isUnique: false,
+          }),
+          content: funcs.valuesFromArray({
+            values: [
+              "*Sometimes I think the best way to debug JavaScript is to pretend the bug is shy.*\nI whisper `console.log` into its ear and if it doesn't blush I add more `console.log`.\nIf it still won't blush, I rename the file and call it \"ancient wisdom.md\" and hope for the best.",
+              "**If a website loads slowly in the forest and no one's there to notice, is it still a performance problem?**\nI like to leave a `TODO: optimize` comment so future me has something to feel guilty about.\nOne day we'll invent a framework that fixes itself, and then we'll all feel obsolete and oddly relieved.",
+              "Sometimes I imagine AI as a polite librarian that keeps rearranging your code into mysterious haikus.\nIt writes tests, then writes more tests for the tests, then asks me where it left my keys.\nI rewarded it with a coffee emoji and it returned my `null` reference with a sonnet.",
+              'I like to think of CSS as a quiet conspiracy between `div`s and `float`.\nWhen they get together they whisper, "let\'s be unpredictable today," and the layout obliges.\nIf you catch them plotting, throw a `grid` at them and walk away slowly.',
+              "There is nothing more spiritual than finally getting `npm install` to finish without errors.\nFor a moment you stand at the terminal and gaze into the dependency graph like it's a small, compliant cosmos.\nThen some transitive package updates and the quiet cosmos becomes chaos again.",
+              '*A good commit message is like a fortune cookie: concise, mysterious, and slightly optimistic.*\nI once wrote "fix stuff" and the repo forgave me because the tests passed.\nAt the release party we all toasted with empty energy drink cans and the CI kept humming like a lullaby.',
+              'When AI suggests a refactor, I nod like a Jedi and say "use the Force."\nThen I open the PR and watch the humans argue about semicolons.\nIf the argument ends in a 2–1 vote and a bike-shedding session, progress has been made.',
+              'The best time to deploy is always after you\'ve gone home, fed your plants, and forgotten that you deployed.\nIf something goes wrong, call it a "surprise feature" and add it to the changelog under `enhancement`.\nEventually your users will love it, or you\'ll rename it to "beta until further notice."',
+              "I entered a room once and the whiteboard asked for my opinion on the architecture.\nI drew a smiley face and wrote `microservices` under it because the smiley was clearly decoupled.\nThe next sprint we replaced the smiley with a service and everything worked *but* the coffee machine stopped responding.",
+              "If code is poetry, then React is free verse and TypeScript is the editor who insists on footnotes.\nI like writing components that are tiny, honest, and slightly apologetic.\nWhen they render, they clap politely and the browser pretends it wasn't moved to tears.",
+            ],
+            isUnique: false,
+          }),
+          title: funcs.loremIpsum({
+            sentencesCount: 1,
+          }),
+          imageUrl: funcs.valuesFromArray({
+            values: [
+              "https://picsum.photos/200/300?random=1",
+              "https://picsum.photos/200/300?random=2",
+              "https://picsum.photos/200/300?random=3",
+              "https://picsum.photos/200/300?random=4",
+              "https://picsum.photos/200/300?random=5",
+            ],
+            isUnique: false,
+          }),
+          published: funcs.default({ defaultValue: true }),
+        },
+        updatedAt: funcs.timestamp(),
+        createdAt: funcs.timestamp(),
+        slug: funcs.string({
+          isUnique: true,
+        }),
+      },
+    }));
 
-    console.log(
-      `📝 Inserting ${mapped.length} article(s) into the database...`,
-    );
-    await db.insert(articles).values(mapped);
-
-    console.log("✅ Seed complete.\n");
+    console.log(`✅ Inserted ${SEED_COUNT} article(s) into the database\n`);
   } catch (err) {
     console.error("💥 Seed failed:", err);
     process.exit(1);

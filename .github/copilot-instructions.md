@@ -39,18 +39,19 @@ This is a **starter app** that Copilot builds, then **students will code along**
 
 ## File Structure Conventions
 
-- **Database operations**: All in `/lib/models/` - makes it easy to swap implementations
-- **Auth helpers**: All in `/lib/auth.js` - single file to replace with real auth
-- **API routes**: Keep them thin, delegate to model functions
-- **Stubs**: Clearly marked as stubs with comments
+### Steps
+
+The way this course is structured, each folder (e.g. 00-start, 01-shadcn, etc. to 09-with-tests) is one step in the project. Inside of each step folder is the complete state of the project. This corresponds to checkpoints in the course.
+
+The full course's text can be found at: https://fullstack-v4.holt.courses/llms.txt
+
+Each step should incrementally build to the next. Take care that if you modify something in one step that it may need to be changed in subsequent and/or previous steps. Generally if you find something like, please flag to the user that more than one step needs to changed and ask for guidance from them.
 
 ## Common Commands
 
 - `npm run dev`: Start development server
 - `npm run build`: Build for production
-- `npm run typecheck`: Run TypeScript checks
-- `npm test`: Run Vitest unit tests
-- `npm run test:e2e`: Run Playwright tests
+- `npm run start`: Serve the finished build
 
 ## App Features (Minimal)
 
@@ -62,28 +63,6 @@ The wiki should have these basic features working:
 - **Content**: Pages store title + markdown content
 - **Files**: Basic file upload (save to disk, show in page)
 - **Styling**: Most pages styled with Tailwind, one page uses shadcn components
-
-## Database Schema (In-Memory)
-
-```javascript
-// users.js - hardcoded array
-const users = [
-  { id: 1, name: "Admin User", email: "admin@test.com", role: "admin" },
-  { id: 2, name: "Editor User", email: "editor@test.com", role: "editor" },
-  { id: 3, name: "Viewer User", email: "viewer@test.com", role: "viewer" },
-];
-
-// pages.js - array that gets modified
-let pages = [
-  {
-    id: 1,
-    title: "Welcome",
-    content: "# Welcome\nThis is our wiki!",
-    authorId: 1,
-    createdAt: "2024-01-01",
-  },
-];
-```
 
 ## Stubs to Replace Later
 

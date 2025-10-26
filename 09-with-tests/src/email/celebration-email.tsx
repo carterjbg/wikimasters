@@ -5,11 +5,13 @@ import { articles } from "@/db/schema";
 import resend from "@/email";
 import CelebrationTemplate from "./templates/celebration-template";
 
-const BASE_URL = "http://localhost:3000"; // we should set this somewhere else
+const BASE_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
 
 export default async function sendCelebrationEmail(
   articleId: number,
-  pageviews: number,
+  pageviews: number
 ) {
   const response = await db
     .select({
@@ -25,7 +27,7 @@ export default async function sendCelebrationEmail(
   const { email, id, title, name } = response[0];
   if (!email) {
     console.log(
-      `❌ skipping sending a celebration for getting ${pageviews} on article ${articleId}, could not find email`,
+      `❌ skipping sending a celebration for getting ${pageviews} on article ${articleId}, could not find email`
     );
     return;
   }
@@ -46,12 +48,12 @@ export default async function sendCelebrationEmail(
 
   if (!emailRes.error) {
     console.log(
-      `📧 sent ${id} a celebration for getting ${pageviews} on article ${articleId}`,
+      `📧 sent ${id} a celebration for getting ${pageviews} on article ${articleId}`
     );
   } else {
     console.log(
       `❌ error sending ${id} a celebration for getting ${pageviews} on article ${articleId}`,
-      emailRes.error,
+      emailRes.error
     );
   }
 }

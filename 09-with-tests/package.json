@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
@@ -64,6 +65,7 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.0.4",
     "drizzle-kit": "^0.31.5",
+    "drizzle-seed": "^0.3.1",
     "happy-dom": "^20.0.5",
     "neonctl": "^2.15.1",
     "tailwindcss": "^4",
