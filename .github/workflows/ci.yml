@@ -35,6 +35,11 @@ jobs:
       - name: Run Biome check (lint + format)
         run: npm run lint
 
+      - name: 'Notify Vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          name: "Vercel - fullstack-next-wiki: lint-and-format"
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -98,6 +103,11 @@ jobs:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
           branch: ${{ env.BRANCH_NAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
+
+      - name: 'Notify Vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          name: "Vercel - fullstack-next-wiki: unit"
 
   e2e-tests:
     name: E2E Tests
@@ -165,3 +175,8 @@ jobs:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
           branch: ${{ env.BRANCH_NAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
+      
+      - name: 'Notify Vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          name: "Vercel - fullstack-next-wiki: e2e"
