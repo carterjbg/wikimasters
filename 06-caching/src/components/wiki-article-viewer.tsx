@@ -25,7 +25,7 @@ interface ViewerArticle {
   id: number;
   content: string;
   createdAt: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 interface WikiArticleViewerProps {
