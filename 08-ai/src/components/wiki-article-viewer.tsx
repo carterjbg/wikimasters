@@ -116,7 +116,7 @@ export default function WikiArticleViewer({
             </Link>
 
             {/* Delete form calls the server action wrapper */}
-            <form action={deleteArticleForm} method="POST">
+            <form action={deleteArticleForm}>
               <input type="hidden" name="id" value={String(article.id)} />
               <Button
                 type="submit"
@@ -259,7 +259,7 @@ export default function WikiArticleViewer({
               </Button>
             </Link>
 
-            <form action={deleteArticleForm} method="POST">
+            <form action={deleteArticleForm}>
               <input type="hidden" name="id" value={String(article.id)} />
               <Button
                 type="submit"

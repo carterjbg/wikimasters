@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
-import { dirname } from "node:path";
 import assert from "node:assert";
+import { dirname } from "node:path";
+import type { NextConfig } from "next";
 
 assert(process.env.BLOB_BASE_URL, "you must have defined BLOB_BASE_URL");
 
