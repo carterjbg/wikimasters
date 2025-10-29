@@ -9,9 +9,7 @@ on:
   pull_request:
     branches: [main]
 
-defaults:
-  run:
-    working-directory: 09-with-tests
+# No global working-directory default — matrix job runs from repo root and uses explicit cd.
 
 jobs:
   steps-lint-typecheck:
@@ -59,6 +57,9 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 09-with-tests
     
     steps:
       - name: Checkout code
@@ -123,6 +124,9 @@ jobs:
   e2e-tests:
     name: E2E Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 09-with-tests
     
     steps:
       - name: Checkout code
@@ -190,6 +194,10 @@ jobs:
   ts-check:
     name: TypeScript Check
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 09-with-tests
 
     steps:
       - name: Checkout code
