@@ -25,7 +25,7 @@ async function main() {
 
     if (users.length === 0) {
       console.error(
-        "❌ No users found in the database. Seed cannot assign authorId without existing users."
+        "❌ No users found in the database. Seed cannot assign authorId without existing users.",
       );
       process.exit(1);
     }

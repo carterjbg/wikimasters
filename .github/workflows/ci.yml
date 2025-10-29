@@ -13,7 +13,7 @@ on:
 
 jobs:
   steps-lint-typecheck:
-    name: "Steps: Lint & Typecheck (00-09)"
+    name: "Lint & Typecheck"
     runs-on: ubuntu-latest
     strategy:
       matrix:
