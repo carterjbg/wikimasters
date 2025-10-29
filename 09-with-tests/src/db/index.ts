@@ -16,4 +16,7 @@ const getDatabaseUrl = () => {
 const sql = neon(getDatabaseUrl());
 const db = drizzle(sql, { schema });
 
+// Export the raw sql client in case callers need to run raw queries (e.g. adjust sequences after seeding)
+export { sql };
+
 export default db;

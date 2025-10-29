@@ -1,6 +1,6 @@
 import { usersSync } from "drizzle-orm/neon";
-import { reset, seed } from "drizzle-seed";
-import db from "@/db/index";
+import { seed } from "drizzle-seed";
+import db, { sql } from "@/db/index";
 import { articles } from "@/db/schema";
 
 const SEED_COUNT = 25;
@@ -10,8 +10,10 @@ async function main() {
   try {
     console.log(`🌱 Starting DB seed with seed ${SEED}...`);
 
-    console.log("🧹 Reseting existing articles table...");
-    await reset(db, { articles });
+    console.log("🧹 Truncating articles table and restarting identity...");
+    // Use TRUNCATE + RESTART IDENTITY so sequences are reset to match an empty table.
+    // This is simpler and avoids needing to call setval later.
+    await sql.query("TRUNCATE TABLE articles RESTART IDENTITY CASCADE;");
 
     console.log("🔎 Querying existing users...");
     const users = await db
@@ -23,7 +25,7 @@ async function main() {
 
     if (users.length === 0) {
       console.error(
-        "❌ No users found in the database. Seed cannot assign authorId without existing users.",
+        "❌ No users found in the database. Seed cannot assign authorId without existing users."
       );
       process.exit(1);
     }
@@ -67,6 +69,8 @@ async function main() {
     }));
 
     console.log(`✅ Inserted ${SEED_COUNT} article(s) into the database\n`);
+
+    // Sequence is reset by TRUNCATE ... RESTART IDENTITY above, so no setval needed.
   } catch (err) {
     console.error("💥 Seed failed:", err);
     process.exit(1);

@@ -25,7 +25,7 @@ interface ViewerArticle {
   id: number;
   content: string;
   createdAt: string;
-  imageUrl: string | null;
+  imageUrl?: string | null;
 }
 
 interface WikiArticleViewerProps {
@@ -41,7 +41,7 @@ export default function WikiArticleViewer({
 }: WikiArticleViewerProps) {
   // local state to show updated pageviews after increment
   const [localPageviews, setLocalPageviews] = useState<number | null>(
-    pageviews ?? null,
+    pageviews ?? null
   );
 
   useEffect(() => {
