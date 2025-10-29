@@ -31,7 +31,7 @@ export async function getArticles(): Promise<ArticleList[]> {
     .from(articles)
     .leftJoin(usersSync, eq(articles.authorId, usersSync.id));
 
-  console.log("🙅‍♂️ Get Articles Cache Miss!");
+  console.log("🏹 Get Articles Cache Miss!");
   try {
     await redis.set("articles:all", JSON.stringify(response), {
       ex: 60,

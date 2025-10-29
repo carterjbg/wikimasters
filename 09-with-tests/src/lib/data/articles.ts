@@ -35,7 +35,7 @@ export async function getArticles(): Promise<ArticleList[]> {
     .from(articles)
     .leftJoin(usersSync, eq(articles.authorId, usersSync.id));
 
-  console.log("🙅‍♂️ Get Articles Cache Miss!");
+  console.log("🏹 Get Articles Cache Miss!");
   // Store cache as JSON so we can retrieve a typed array later
   try {
     await redis.set("articles:all", JSON.stringify(response), {
@@ -57,7 +57,7 @@ export type ArticleWithAuthor = {
 };
 
 export async function getArticleById(
-  id: number,
+  id: number
 ): Promise<ArticleWithAuthor | null> {
   const response = await db
     .select({

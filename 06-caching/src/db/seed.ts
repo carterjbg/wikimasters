@@ -79,7 +79,17 @@ async function main() {
 
     console.log(`✅ Inserted ${SEED_COUNT} article(s) into the database\n`);
 
-    // Sequence is reset by TRUNCATE ... RESTART IDENTITY above, so no setval needed.
+    // Ensure the articles sequence is synced to the current MAX(id). This is a
+    // safety measure in case the DB was imported or mutated in a way that left
+    // the sequence behind the table's max value.
+    try {
+      await sql.query(
+        `SELECT setval(pg_get_serial_sequence('articles','id'), COALESCE((SELECT MAX(id) FROM articles), 1), true);`,
+      );
+      console.log("✅ Sequence synced after seeding");
+    } catch (err) {
+      console.warn("⚠️ Failed to sync articles sequence after seeding:", err);
+    }
   } catch (err) {
     console.error("💥 Seed failed:", err);
     process.exit(1);
