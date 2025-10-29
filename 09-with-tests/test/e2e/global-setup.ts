@@ -47,10 +47,10 @@ async function globalSetup() {
     const { neon } = await import("@neondatabase/serverless");
     const sql = neon(process.env.DATABASE_URL || "");
     console.log(
-      "🔁 Syncing articles sequence to MAX(id) to avoid PK collisions..."
+      "🔁 Syncing articles sequence to MAX(id) to avoid PK collisions...",
     );
     await sql.query(
-      `SELECT setval(pg_get_serial_sequence('articles','id'), COALESCE((SELECT MAX(id) FROM articles), 1), true);`
+      `SELECT setval(pg_get_serial_sequence('articles','id'), COALESCE((SELECT MAX(id) FROM articles), 1), true);`,
     );
     console.log("✅ Sequence sync complete");
   } catch (err) {
@@ -60,7 +60,7 @@ async function globalSetup() {
   // Store the server process ID for teardown
   writeFileSync(
     join(process.cwd(), ".test-server-pid.json"),
-    JSON.stringify({ pid: devServer.pid }, null, 2)
+    JSON.stringify({ pid: devServer.pid }, null, 2),
   );
 }
 
