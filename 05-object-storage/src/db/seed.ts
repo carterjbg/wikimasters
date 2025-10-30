@@ -57,16 +57,7 @@ async function main() {
           title: funcs.loremIpsum({
             sentencesCount: 1,
           }),
-          imageUrl: funcs.valuesFromArray({
-            values: [
-              "https://picsum.photos/200/300?random=1",
-              "https://picsum.photos/200/300?random=2",
-              "https://picsum.photos/200/300?random=3",
-              "https://picsum.photos/200/300?random=4",
-              "https://picsum.photos/200/300?random=5",
-            ],
-            isUnique: false,
-          }),
+          imageUrl: funcs.default({ defaultValue: null }),
           published: funcs.default({ defaultValue: true }),
         },
         updatedAt: funcs.timestamp(),

@@ -95,6 +95,8 @@ If you redistribute course materials or code, make sure to follow the terms of t
 
 This repo is intentionally minimal so students can replace stubs during the course. If you want to contribute fixes or improvements to the starter files, open a PR against the project repo above. Keep changes small and focused — these folders are used as teaching checkpoints.
 
+In general most issues should go against the course website, not the project files.
+
 ## Summary
 
 This repo is a set of reproducible step snapshots for Brian Holt's Frontend Masters course. Pick a step, `npm install`, run the checks, start the dev server, and follow along with the lesson. For deployment, copy/adapt the CI workflow in `09-with-tests` and provide your own secrets via `.env` or your CI secrets manager.
