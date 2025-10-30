@@ -8,17 +8,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-interface Article {
-  id: string;
+interface ViewerArticle {
   title: string;
+  author: string | null;
+  id: number;
   content: string;
-  author: string;
   createdAt: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 interface WikiArticleViewerProps {
-  article: Article;
+  article: ViewerArticle;
   canEdit?: boolean;
 }
 
