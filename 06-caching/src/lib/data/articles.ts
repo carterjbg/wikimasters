@@ -10,15 +10,15 @@ export type ArticleList = {
   createdAt: string;
   content: string;
   author: string | null;
-  imageUrl?: string | null;
+  // imageUrl?: string | null;
 };
 
 export async function getArticles(): Promise<ArticleList[]> {
-  const cached = await redis.get<ArticleList[]>("articles:all");
-  if (cached) {
-    console.log("🎯 Get Articles Cache Hit!");
-    return cached;
-  }
+  // const cached = await redis.get<ArticleList[]>("articles:all");
+  // if (cached) {
+  //   console.log("🎯 Get Articles Cache Hit!");
+  //   return cached;
+  // }
 
   const response = await db
     .select({
@@ -32,10 +32,12 @@ export async function getArticles(): Promise<ArticleList[]> {
     .leftJoin(usersSync, eq(articles.authorId, usersSync.id));
 
   console.log("🏹 Get Articles Cache Miss!");
+  console.log(response);
   try {
     await redis.set("articles:all", JSON.stringify(response), {
       ex: 60,
     });
+    console.log("Added all articles to cache.");
   } catch (err) {
     console.warn("Failed to set articles cache", err);
   }
