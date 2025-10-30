@@ -37,12 +37,9 @@ interface WikiArticleViewerProps {
 export default function WikiArticleViewer({
   article,
   canEdit = false,
-  pageviews = null,
 }: WikiArticleViewerProps) {
   // local state to show updated pageviews after increment
-  const [localPageviews, setLocalPageviews] = useState<number | null>(
-    pageviews ?? null,
-  );
+  const [localPageviews, setLocalPageviews] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchPageview() {

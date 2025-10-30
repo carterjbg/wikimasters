@@ -17,6 +17,7 @@ interface WikiEditorProps {
   initialContent?: string;
   isEditing?: boolean;
   articleId?: string;
+  userId?: string;
 }
 
 interface FormErrors {
@@ -29,6 +30,7 @@ export default function WikiEditor({
   initialContent = "",
   isEditing = false,
   articleId,
+  userId = "user-1",
 }: WikiEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
@@ -91,8 +93,8 @@ export default function WikiEditor({
       const payload = {
         title: title.trim(),
         content: content.trim(),
-        authorId: "user-1", // TODO: wire real user id
         imageUrl,
+        authorId: userId,
       };
 
       if (isEditing && articleId) {

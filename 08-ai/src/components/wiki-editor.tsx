@@ -17,6 +17,7 @@ interface WikiEditorProps {
   initialContent?: string;
   isEditing?: boolean;
   articleId?: string;
+  userId?: string;
 }
 
 interface FormErrors {
@@ -29,6 +30,7 @@ export default function WikiEditor({
   initialContent = "",
   isEditing = false,
   articleId,
+  userId = "user-1",
 }: WikiEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
@@ -91,18 +93,22 @@ export default function WikiEditor({
       const payload = {
         title: title.trim(),
         content: content.trim(),
-        authorId: "user-1", // TODO: wire real user id
         imageUrl,
+        authorId: userId,
       };
 
       if (isEditing && articleId) {
         await updateArticle(articleId, payload);
-        // Redirect to home after successful update
-        router.push("/");
+        // Redirect to article page after successful update
+        router.push(`/wiki/${articleId}`);
       } else {
-        await createArticle(payload);
-        // Redirect to home after successful create
-        router.push("/");
+        const result = await createArticle(payload);
+        // Redirect to article page after successful create
+        if (result.id) {
+          router.push(`/wiki/${result.id}`);
+        } else {
+          router.push("/");
+        }
       }
     } catch (err) {
       console.error("Error submitting article:", err);
@@ -148,6 +154,7 @@ export default function WikiEditor({
               <Label htmlFor="title">Title *</Label>
               <Input
                 id="title"
+                name="title"
                 type="text"
                 placeholder="Enter article title..."
                 value={title}
@@ -181,6 +188,7 @@ export default function WikiEditor({
                   hideToolbar={false}
                   visibleDragbar={false}
                   textareaProps={{
+                    name: "content",
                     placeholder: "Write your article content in Markdown...",
                     style: { fontSize: 14, lineHeight: 1.5 },
                     // make these explicit so SSR and client output match exactly

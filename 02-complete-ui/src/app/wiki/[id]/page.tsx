@@ -16,7 +16,7 @@ export default async function ViewArticlePage({
 
   // Mock article data - in a real app, this would be fetched from an API
   const mockArticle = {
-    id: id,
+    id: +id,
     title: "Welcome to WikiFlow",
     content: `# Getting Started with WikiFlow
 
